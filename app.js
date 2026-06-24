@@ -7,6 +7,12 @@ export default function(express, bodyParser, createReadStream, crypto, http) {
   app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,OPTIONS,DELETE');
+    res.header('Access-Control-Allow-Headers', '*');
+    
+    if (req.method === 'OPTIONS') {
+      return res.sendStatus(200);
+    }
+    
     if (!req.path.endsWith('/') && req.path !== '/') {
       return res.redirect(301, req.path + '/');
     }
